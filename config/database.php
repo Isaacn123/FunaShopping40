@@ -1,4 +1,12 @@
 <?php
+$redisUrl = parse_url(env('REDIS_URL'));
+// if (getenv('REDIS_URL')) {
+//     $url = parse_url(getenv('REDIS_URL'));
+
+//     putenv('REDIS_HOST='.$url['host']);
+//     putenv('REDIS_PORT='.$url['port']);
+//     putenv('REDIS_PASSWORD='.$url['pass']);
+// }
 
 use Illuminate\Support\Str;
 
@@ -119,26 +127,36 @@ return [
 
     'redis' => [
 
-        'client' => env('REDIS_CLIENT', 'phpredis'),
+        'client' => 'predis',
 
-        'options' => [
-            'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
-        ],
+        // 'options' => [
+        //     'cluster' => env('REDIS_CLUSTER', 'redis'),
+        //     'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+        // ],
 
+        // 'default' => [
+        //     'url' => env('REDIS_URL'),
+        //     'host' => env('REDIS_HOST', '127.0.0.1'),
+        //     'password' => env('REDIS_PASSWORD', null),
+        //     'port' => env('REDIS_PORT', '6379'),
+        //     'database' => env('REDIS_DB', '0'),
+        // ],
         'default' => [
-            'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
-            'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_DB', '0'),
+            // 'url' => $redisUrl['url']),
+            'host' => $redisUrl['host'],
+            'password' => $redisUrl['pass'],
+            'port' => $redisUrl['port'],
+            'database' => 0,
         ],
 
         'cache' => [
             'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
-            'port' => env('REDIS_PORT', '6379'),
+            // 'host' => env('REDIS_HOST', '127.0.0.1'),
+            // 'password' => env('REDIS_PASSWORD', null),
+            // 'port' => env('REDIS_PORT', '6379'),
+            'host' => $redisUrl['host'],
+            'password' => $redisUrl['pass'],
+            'port' => $redisUrl['port'],
             'database' => env('REDIS_CACHE_DB', '1'),
         ],
 

@@ -81,7 +81,9 @@ class ProductController extends Controller
             $name = $imagename . "." . $extension;
             $path = $result->getSecurePath();
             $product->featured_image = $name;
-            $imageID = $result->getPublicId();
+            // $imageID = $result->getPublicId();
+
+
         }
 
         $product->save();
